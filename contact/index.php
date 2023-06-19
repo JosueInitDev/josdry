@@ -48,6 +48,19 @@ require_once('../includes/constants.php');
                         </div>
                     </div>
                     <div class="form-group col-sm-12">
+                        <label>Service <b style="color:red">*</b></label>
+                        <div class="form">
+                            <select class="form__input form-control">
+                                <option value="" disabled selected>Choisir un service</option>
+                                <?php
+                                foreach ($services as $key => $value){
+                                    echo "<option value='$key'>$value</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
                         <label>Objet de votre demande <b style="color:red">*</b></label>
                         <div class="form">
                             <textarea class="form__input form-control" placeholder="Expliquez-nous votre demande ici. Pour les documents, vous pourrez nous les partager plus tard ..." required rows="6" style="height:auto"></textarea>
