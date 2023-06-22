@@ -9,7 +9,32 @@
             </div>
         </div>
         <!-- End Head -->
+        <?php
+            $base_name = 'lovesfoo_appxcelerate';
+            $username = 'lovesfoo';
+            $password = '357a[F-IYY8nbx';
+            $host = '/var/run/postgresql';
+            //$db = new PDO('mysql:host='.$host.';dbname='.$base_name, $username, $password); // Connexion MYSQL
 
+            // Connexion PostgreSQL
+            $dsn = "pgsql:host=$host;port=5432;dbname=$base_name;";
+            $db = new PDO($dsn, $username, $password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+
+            $resCountContact = $db->prepare("select count(*) as total FROM contact");
+            $resCountDevis = $db->prepare("select count(*) as totalDevis FROM devis");
+            $resCountContact->execute();
+            $resCountDevis->execute();
+            $totalContact = $resCountContact->fetchColumn();
+            $totalDevis = $resCountDevis->fetchColumn();
+
+            $total = $totalContact + $totalDevis;
+
+            $messages = $db->prepare("select * FROM contact where etat = ? order by id desc LIMIT 3");
+            $messages->bindValue(1, true, PDO::PARAM_BOOL);
+            $messages->execute();
+            $rows = $messages->fetchAll();
+
+        ?>
         <!-- Stats -->
         <div class="stats flex">
             <div class="stats box sales">
@@ -23,7 +48,16 @@
                     <div class="earning-icon flex">
                         <ion-icon name="mail-unread-outline"></ion-icon>
                     </div>
-                    <p>1 552 messages reçus</p>
+                    <p>
+                        <?php
+                            if ($total > 1){
+                                echo $total." messages reçus";
+                            }else{
+                                echo $total." message reçu";
+                            }
+
+                        ?>
+                    </p>
                 </div>
                 <canvas id="earning"></canvas>
             </div>
@@ -44,42 +78,20 @@
                         <th>Objet</th>
                         <th>Statut</th>
                     </tr>
+                    <?php foreach ($rows as $row) : ?>
                     <tr>
-                        <td>68231</td>
+                        <td><?= $row['id'] ?></td>
                         <td>
                             <div class="product-name flex">
                                 <div class="icon">
                                 <ion-icon name="logo-amazon"></ion-icon>
                                 </div>
-                                <p>Amazon Kindle 4th Gen</p>
+                                <p><?= $row['sujet'] ?></p>
                             </div>
                         </td>
                         <td>Non traité</td>
                     </tr>
-                    <tr>
-                        <td>68231</td>
-                        <td>
-                            <div class="product-name iphone flex">
-                                <div class="icon">
-                                <ion-icon name="logo-apple"></ion-icon>
-                                </div>
-                                <p>Iphone 11 Pro</p>
-                            </div>
-                        </td>
-                        <td>Non traité</td>
-                    </tr>
-                    <tr>
-                        <td>68231</td>
-                        <td>
-                            <div class="product-name windows flex">
-                                <div class="icon">
-                                <ion-icon name="logo-microsoft"></ion-icon>
-                                </div>
-                                <p>WIndows 11</p>
-                            </div>
-                        </td>
-                        <td>Traité</td>
-                    </tr>
+                    <?php endforeach; ?>
                 </table>
             </div>
         </div>

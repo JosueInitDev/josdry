@@ -1,3 +1,4 @@
+<span id="haut"></span>
 <!-- navbar -->
 <header>
     <nav class="navbar navbar-expand-md navbar-dark" style="padding:0">

@@ -10,7 +10,6 @@ require_once('includes/constants.php');
 <body>
     <?php include('includes/navbar.php'); ?>
 
-
     <!-- waves -->
     <div class="waves">
         <div id="particles-foreground"></div>
