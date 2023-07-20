@@ -32,6 +32,9 @@
                     <a class="nav-link" href="<?php echo $site_url ?>#exemple6">Autres</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="<?php echo $site_url ?>/login">Connexion</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="<?php echo $site_url ?>/contact"><button class="btn btn-sm btn-light" style="border-radius:25px"><b>Demander un devis</b></button></a>
                 </li>
             </ul>

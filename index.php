@@ -8,7 +8,25 @@ require_once('includes/constants.php');
     <?php include('includes/head.php') ?>
 </head>
 <body>
-    <?php include('includes/navbar.php'); ?>
+    <?php include('includes/navbar.php');
+
+    require 'includes/db/dbConnect.php';
+
+    $ipinfo = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp"));
+
+    $pays_user= $ipinfo->geoplugin_countryName . "\n";
+
+    $insertVisite = $db->prepare('INSERT INTO visite(pays, page, sujet, annee, mois) VALUES (:pays, :page, :sujet, :annee, :mois)');
+
+    $insertVisite->bindValue(':pays', $pays_user, PDO::PARAM_STR);
+    $insertVisite->bindValue(':page', 'landing', PDO::PARAM_STR);
+    $insertVisite->bindValue(':sujet', '', PDO::PARAM_STR);
+    $insertVisite->bindValue(':annee', date('Y'), PDO::PARAM_STR);
+    $insertVisite->bindValue(':mois', date('m'), PDO::PARAM_STR);
+    $insertVisite->execute();
+    ?>
+
+
 
     <!-- waves -->
     <div class="waves">

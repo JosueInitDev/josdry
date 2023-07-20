@@ -1,4 +1,5 @@
-<?php
+<?php session_start();
+if (!isset($_SESSION['username'])){ header('Location: ./../'); }
 require_once('../includes/constants.php');
 ?>
 
@@ -20,7 +21,9 @@ require_once('../includes/constants.php');
             <div class="logo">
                 <div class="icon">
                     <a href="?p=home"><img src="../img/logo.png" alt="" class="img-fluid"></a>
+
                 </div>
+                <a href="logout.php" class="btn btn-danger">Logout</a>
             </div>
 
             <div class="navigation">
@@ -30,6 +33,10 @@ require_once('../includes/constants.php');
 
                 <div class="icon" title="Messages reçus" data-toggle="tooltip">
                     <a href="?p=messages" style="color:#ccc"><ion-icon name="mail-unread-outline"></ion-icon></a>
+                </div>
+                
+                <div class="icon" title="Devis reçus" data-toggle="tooltip">
+                    <a href="?p=devis" style="color:#ccc"><ion-icon name="mail-unread-outline"></ion-icon></a>
                 </div>
 
                 <div class="icon" title="Projets réalisées" data-toggle="tooltip">
@@ -55,6 +62,9 @@ require_once('../includes/constants.php');
             break;
             case 'params':
                 include('pages/settings.php');
+            break;
+            case 'devis':
+                include('pages/devis.php');
             break;
         }
         ?>
